@@ -14,7 +14,6 @@ function wait_for_alert(m_w) {
       globalShortcut.registerAll(
         ["CommandOrControl+Q","CommandOrControl+W"],
         () => {
-          app.exit()
           return;
         }
       );
@@ -57,7 +56,6 @@ function focus(m_w,interval) {
     focus(m_w,interval)
   },interval)
   m_w.show()
-  console.log("?")
 }
 
 (async () => {

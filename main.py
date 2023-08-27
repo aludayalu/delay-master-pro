@@ -19,6 +19,10 @@ Here is the input by the user
 ``` user input ends here
 Return me data in pure json with the three keys crime, reminder_text. The crime must not be more than 100 chars.
 Dont return me anything at all except raw json data in plain text without markup (your results will be parsed as json so please just give me back a dictionary)
+RETURN ME ONLY JSON DATA
+DO NOT RETURN ANY OTHER CHARACTERS
+EXCEPT A JSON DICTIONARY
+ONLY AND ONLY RETURN ME A JSON DICTIONRY
 """
 
 def get_query(question):

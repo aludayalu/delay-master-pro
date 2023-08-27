@@ -62,12 +62,19 @@ export default function Home() {
         </div>
         </>
     )
+    function time_get_multi_digits(time) {
+        if (time<10) {
+            return "0"+time.toString()
+        } else {
+            return time.toString()
+        }
+    }
     async function check_reminder() {
         data=(await axios.get('http://localhost:8080/details?email='+email)).data
         data.tasks.map((x)=>{
             var date=(new Date())
-            console.log(x.datetime,`${date.getFullYear()}-0${Number(date.getMonth())+1}-${date.getDate()}T${date.getHours()}:${date.getMinutes()}`,done)
-            if (x.datetime==`${date.getFullYear()}-0${Number(date.getMonth())+1}-${date.getDate()}T${date.getHours()}:${date.getMinutes()}` && !done.includes(x.id)) {
+            console.log(x.datetime,`${date.getFullYear()}-0${Number(date.getMonth())+1}-${date.getDate()}T${date.getHours()}:${time_get_multi_digits(date.getMinutes())}`,done)
+            if (x.datetime==`${date.getFullYear()}-${time_get_multi_digits(Number(date.getMonth())+1)}-${date.getDate()}T${date.getHours()}:${time_get_multi_digits(date.getMinutes())}` && !done.includes(x.id)) {
                 var copydone=done
                 copydone.push(x.id)
                 setDone(copydone)
@@ -157,14 +164,14 @@ export default function Home() {
                         <Button id="submit_button" onClick={async ()=>{
                             document.getElementById("submit_loader").style.display="block"
                             document.getElementById("submit_button").style.display="none"
-                            // var xdata=(await axios.get("http://localhost:8080/question?question="+document.getElementById("crime_data").value)).data
-                            var xdata={
-                                "crime": "Wake-up Reminder",
-                                "reminder_text": "Please wake me up."
-                            }
+                            var xdata=(await axios.get("http://localhost:8080/question?question="+document.getElementById("crime_data").value)).data
+                            // var xdata={
+                            //     "crime": "Wake-up Reminder",
+                            //     "reminder_text": "Please wake me up."
+                            // }
                             var datetime=document.getElementById("time").value;
-                            // var passive_agressive=(await axios.get("http://localhost:8080/passive_agressive?crime="+`${xdata.crime} , reminder text: ${xdata.reminder_text}`)).data.message
-                            var passive_agressive='"Hello Everyone!"'
+                            var passive_agressive=(await axios.get("http://localhost:8080/passive_agressive?crime="+`${xdata.crime} , reminder text: ${xdata.reminder_text}`)).data.message
+                            // var passive_agressive='"Hello Everyone!"'
                             console.log(passive_agressive.message,"...?")
                             var videoid=(await generateAvatar(token,operationType,passive_agressive.split('"')[1],voiceGender,avatarImageUrl)).data.data
                             console.log(videoid)
@@ -180,17 +187,21 @@ export default function Home() {
                 </div>
             </Row>
             <Modal
+            preventClose
+            onClose={()=>{
+                return
+            }}
             open={!current_lockdown.id==""}
             >
             {/* ${current_lockdown.id} */}
-            <video src={`http://20.84.94.16:9090/generated/Rf5GngG0OYiqbidHnMPw.mp4`} autoPlay={!current_lockdown.id==""}></video>
+            <video src={`http://20.84.94.16:9090/generated/Rf5GngG0OYiqbidHnMPw.mp4`} loop autoPlay={!current_lockdown.id==""}></video>
             {(()=>{
                 setTimeout(()=>{
                     if (current_lockdown.id!=="") {
                     setCurrentLockdown({id:""})
                     axios.get("http://localhost:8080/unlockdown")
                     }
-                },10000)
+                },15000)
             })()}
             </Modal>
         </> 
