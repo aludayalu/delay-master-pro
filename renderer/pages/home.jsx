@@ -62,9 +62,11 @@ export default function Home() {
         </div>
         </>
     )
-    function check_reminder() {
+    async function check_reminder() {
+        data=(await axios.get('http://localhost:8080/details?email='+email)).data
         data.tasks.map((x)=>{
             var date=(new Date())
+            console.log(x.datetime,`${date.getFullYear()}-0${Number(date.getMonth())+1}-${date.getDate()}T${date.getHours()}:${date.getMinutes()}`,done)
             if (x.datetime==`${date.getFullYear()}-0${Number(date.getMonth())+1}-${date.getDate()}T${date.getHours()}:${date.getMinutes()}` && !done.includes(x.id)) {
                 var copydone=done
                 copydone.push(x.id)
@@ -180,7 +182,8 @@ export default function Home() {
             <Modal
             open={!current_lockdown.id==""}
             >
-            <video src={`http://20.84.94.16:9090/generated/${current_lockdown.id}.mp4`} autoPlay={!current_lockdown.id==""}></video>
+            {/* ${current_lockdown.id} */}
+            <video src={`http://20.84.94.16:9090/generated/Rf5GngG0OYiqbidHnMPw.mp4`} autoPlay={!current_lockdown.id==""}></video>
             {(()=>{
                 setTimeout(()=>{
                     if (current_lockdown.id!=="") {
