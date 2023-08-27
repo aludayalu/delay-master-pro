@@ -78,7 +78,7 @@ export default function Home() {
                 var copydone=done
                 copydone.push(x.id)
                 setDone(copydone)
-                console.log(done)
+                console.log(done,"LOCKDOWN KRDIYA")
                 axios.get("http://localhost:8080/lockdown")
                 setCurrentLockdown({"id":x.id})
             }

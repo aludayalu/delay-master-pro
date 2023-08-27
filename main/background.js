@@ -21,7 +21,7 @@ function wait_for_alert(m_w) {
   } else {
     stopfocus_loop=false
     dont_allow_exit()
-    focus(m_w,1000)
+    focus(m_w,100)
     stopfocus_loop=false
   }
   setTimeout(()=>{
